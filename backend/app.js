@@ -23,9 +23,13 @@ app.use(cors());
 // parses urlencoded payloads
 app.use(express.urlencoded({extended: true}));
 
+// Setting up access to api to handle users
+const users = require('./routes/api/users');
+app.use('/api/users', users);
+
 // Setting up access to api to handle bug reporting
-const bugs = require('./routes/api/posts');
-app.use('/api/bugs', bugs);
+const posts = require('./routes/api/posts');
+app.use('/api/posts', posts);
 
 // Set the port
 const port = process.env.PORT || 3000;

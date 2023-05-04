@@ -11,9 +11,18 @@ const bugSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    reporter: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
     createdOn: {
         type: Date,
-        required: true,
+        immutable: true,
+        default: () => Date.now(),
+    },
+    updatedAt: {
+        type: Date,
+        default: () => Date.now(),
     }
 });
 
