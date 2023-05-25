@@ -6,7 +6,7 @@ const Bugs = require('../models/bugModel')
 // fetch all bugs controller
 const getAllBugs = async (req, res) => {
     try{
-        const result = await Bugs.find();
+        const result = await Bugs.find().populate('postedBy').exec();
         res.status(200).json(result);
         console.log("Fetch Data");
     }
@@ -31,10 +31,7 @@ const getOneBug = async (req, res) => {
 
 // Save bug controller
 const saveBug = async (req, res) => {
-    const bug = new Bugs({
-        bug: req.body.bug,
-        desc: req.body.desc,
-    });
+    const bug = new Bugs(req.body);
     try{
         const result = await bug.save();
         res.status(201).send(result);
@@ -49,8 +46,8 @@ const updateBug = async (req, res) => {
     const updates = req.body;
     if(mongoose.Types.ObjectId.isValid(req.params.bugId)){
         try{
-            await Bugs.findByIdAndUpdate(req.params.bugId, {$set: updates});
-            res.status(200).json({msg: "Success"});
+            const result = await Bugs.findByIdAndUpdate(req.params.bugId, {$set: updates});
+            res.status(200).send(result);
             console.log("bug report has been updated");
         }
         catch(err){

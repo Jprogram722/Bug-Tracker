@@ -5,6 +5,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 
 // Sets it so that mongoose will send anything even not specified in schema
@@ -18,7 +19,16 @@ const app = express();
 app.use(bodyParser.json());
 
 // connects the backend to the front end
-app.use(cors());
+const corsOptions = {
+    origin: ['http://localhost:5173'],
+    credentials: true,
+    optionSuccessStatus: 200
+}
+app.use(cors(corsOptions));
+
+
+// parses cookies
+app.use(cookieParser());
 
 // parses urlencoded payloads
 app.use(express.urlencoded({extended: true}));

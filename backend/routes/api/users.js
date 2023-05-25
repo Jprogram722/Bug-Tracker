@@ -5,14 +5,16 @@
 
 const express = require('express');
 const userController = require('../../controllers/userController');
+const {auth, refresh} = require('../../middleware/authMiddleware');
+
 
 const router = express.Router();
 
 // Get users
 router.get('/', userController.getAllUsers);
 
-// Get one user
-router.get('/:userName', userController.getOneUser);
+// Get current user
+router.get('/user', auth, userController.currentUser);
 
 // create user
 router.post('/', userController.createUser);
@@ -22,5 +24,14 @@ router.patch('/:userId', userController.updateUser);
 
 // delete user
 router.delete('/:userId', userController.deleteUser);
+
+// Login
+router.post('/login', userController.login);
+
+// refresh token
+router.get('/refresh', refresh, userController.refresh);
+
+// logout
+router.get('/logout', userController.logout);
 
 module.exports = router;
