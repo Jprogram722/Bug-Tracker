@@ -5,7 +5,7 @@
             <p class="font-bold underline sm:text-lg">Things To Do For Today: </p>
             <RouterLink :to="{name: 'report-bug'}"><button class="btn btn-secondary">Make Report</button></RouterLink>
         </div>
-        <Bug/>
+        <Bug v-if="user_id" :user_id="user_id"/>
     </div>
 </template>
 
@@ -19,6 +19,7 @@ export default {
     name: 'profile',
     components: {Bug},
     setup () {
+        const user_id = ref('');
         const name = ref('');
         const router = useRouter();
 
@@ -46,13 +47,14 @@ export default {
             const user = await loggedInUser();
             if(user){
                 name.value = user.name;
+                user_id.value = user._id;
             }
             else{
                 router.push({name: 'login'});
             }
         });
 
-        return {name}
+        return {name, user_id}
     }
 }
 </script>

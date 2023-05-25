@@ -44,13 +44,15 @@ import { ref, onMounted } from 'vue';
 
 export default {
     name: 'Bug',
-    setup () {
+    props: ['user_id'],
+    setup (props, context) {
 
         const bugs = ref({});
         
         onMounted(async () => {
             try{
-                const {data} = await axios.get('http://localhost:3000/api/posts');
+                console.log(props);
+                const {data} = await axios.get(`http://localhost:3000/api/posts/${props.user_id}`);
                 bugs.value = data;
             }
             catch(err){

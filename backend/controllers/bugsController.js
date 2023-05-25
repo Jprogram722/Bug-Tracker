@@ -6,7 +6,8 @@ const Bugs = require('../models/bugModel')
 // fetch all bugs controller
 const getAllBugs = async (req, res) => {
     try{
-        const result = await Bugs.find().populate('postedBy').exec();
+        console.log(req.params.id);
+        const result = await Bugs.find({postedBy: req.params.id}).populate('postedBy').exec();
         res.status(200).json(result);
         console.log("Fetch Data");
     }

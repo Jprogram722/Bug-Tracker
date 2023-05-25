@@ -42,8 +42,8 @@ function handleError(err) {
 
 function createToken(id){
     return {
-        accessToken: jwt.sign({ id }, 'big secret', { expiresIn: "2m" }),
-        refreshToken: jwt.sign({ id }, 'test secret', { expiresIn: "1d" }),
+        accessToken: jwt.sign({ id }, process.env.ACCESS_SECRET, { expiresIn: "2m" }),
+        refreshToken: jwt.sign({ id }, process.env.REFRESH_SECRET, { expiresIn: "1d" }),
     }
 }
 

@@ -9,7 +9,7 @@ const bugsController = require('../../controllers/bugsController');
 const router = express.Router();
 
 // Get bugs (read)
-router.get('/', bugsController.getAllBugs);
+router.get('/:id', bugsController.getAllBugs);
 
 // Get one bug (read)
 router.get('/:bugName', bugsController.getOneBug);
